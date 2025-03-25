@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Container, TabBar, TabButton, TabContent } from "./page.styles";
+import { Container, TabBar, TabButton, TabContent } from "../styles/page.styles";
 
 interface TabInfo {
     id: string;
@@ -32,7 +32,7 @@ export default function Home() {
                                 layoutId="activeTabIndicator"
                                 className="indicator"
                                 initial={false}
-                                transition={{ duration: 0.3 }}
+                                transition={{ duration: 0.2 }}
                             />
                         )}
                         {tab.label}

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Colors } from "@/styles/colors";
 
 interface TabButtonProps {
     isActive: boolean;
@@ -10,7 +11,7 @@ export const Container = styled.div`
 
 export const TabBar = styled.div`
     display: flex;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid ${Colors.border};
 `;
 
 export const TabButton = styled.button<TabButtonProps>`
@@ -19,8 +20,8 @@ export const TabButton = styled.button<TabButtonProps>`
     border: none;
     background: none;
     cursor: pointer;
-    color: ${(props) => (props.isActive ? "#4f46e5" : "#888")};
-    font-weight: ${(props) => (props.isActive ? "bold" : "normal")};
+    color: ${(props) =>
+        props.isActive ? Colors.primary : Colors.textSecondary};
 
     .indicator {
         position: absolute;
@@ -28,7 +29,7 @@ export const TabButton = styled.button<TabButtonProps>`
         left: 0;
         right: 0;
         height: 2px;
-        background-color: #4f46e5;
+        background-color: ${Colors.primary};
     }
 `;
 
