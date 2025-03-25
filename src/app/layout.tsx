@@ -1,3 +1,5 @@
+"use client";
+
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ReactNode } from "react";
 
