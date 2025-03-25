@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Container, TabBar, TabButton, TabContent } from "../styles/page.styles";
+import { Container, TabBar, TabButton, TabContent } from "@/styles/page.styles";
 
 interface TabInfo {
     id: string;
