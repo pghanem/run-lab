@@ -2,7 +2,14 @@
 
 import { JSX, useState } from "react";
 import { motion } from "framer-motion";
-import { Container, TabBar, TabButton, TabContent } from "@/styles/page.styles";
+import {
+    Container,
+    TabBar,
+    TabButton,
+    TabContent,
+    SwitchWrapper,
+} from "@/styles/page.styles";
+import { useMeasurement } from "@/context/MeasurementContext";
 
 import Visualizer from "@/components/Visualizer";
 import Calculator from "@/components/Calculator";
@@ -16,6 +23,7 @@ interface TabInfo {
 
 export default function Home() {
     const [activeTab, setActiveTab] = useState<string>("visualizer");
+    const { isMetric, toggleMeasurement } = useMeasurement();
 
     const tabs: TabInfo[] = [
         { id: "visualizer", label: "Visualizer", component: <Visualizer /> },
@@ -43,6 +51,17 @@ export default function Home() {
                         {tab.label}
                     </TabButton>
                 ))}
+
+                <SwitchWrapper>
+                    <label>
+                        <input
+                            type="checkbox"
+                            onChange={toggleMeasurement}
+                            checked={isMetric}
+                        />
+                        {isMetric ? "Metric" : "Imperial"}
+                    </label>
+                </SwitchWrapper>
             </TabBar>
 
             <TabContent>

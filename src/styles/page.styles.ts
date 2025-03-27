@@ -36,3 +36,22 @@ export const TabButton = styled.button<TabButtonProps>`
 export const TabContent = styled.div`
     padding: 20px 0;
 `;
+
+export const SwitchWrapper = styled.div`
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+
+    label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    input {
+        cursor: pointer;
+    }
+`;
