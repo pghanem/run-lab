@@ -1,21 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { motion } from "framer-motion";
 import { Container, TabBar, TabButton, TabContent } from "@/styles/page.styles";
+
+import Visualizer from "@/components/Visualizer";
+import Calculator from "@/components/Calculator";
+import Insights from "@/components/Insights";
 
 interface TabInfo {
     id: string;
     label: string;
+    component: JSX.Element;
 }
 
 export default function Home() {
     const [activeTab, setActiveTab] = useState<string>("visualizer");
 
     const tabs: TabInfo[] = [
-        { id: "visualizer", label: "Visualizer" },
-        { id: "calculator", label: "Calculator" },
-        { id: "insights", label: "Insights" },
+        { id: "visualizer", label: "Visualizer", component: <Visualizer /> },
+        { id: "calculator", label: "Calculator", component: <Calculator /> },
+        { id: "insights", label: "Insights", component: <Insights /> },
     ];
 
     return (
@@ -40,7 +45,9 @@ export default function Home() {
                 ))}
             </TabBar>
 
-            <TabContent>{activeTab}</TabContent>
+            <TabContent>
+                {tabs.find((tab) => tab.id === activeTab)?.component}
+            </TabContent>
         </Container>
     );
 }
