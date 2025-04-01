@@ -3,71 +3,76 @@ import { useMeasurement } from "@/context/MeasurementContext";
 
 const RunningCalculator: React.FC = () => {
     const { isMetric } = useMeasurement();
-    const [time, setTime] = useState<number>(0); // in minutes
-    const [distance, setDistance] = useState<number>(0); // in km or miles
-    const [pace, setPace] = useState<number>(0); // min per km or mile
+    const [time, setTime] = useState("");
+    const [distance, setDistance] = useState("");
+    const [pace, setPace] = useState("");
 
-    const calculatePace = () => {
-        if (distance > 0) {
-            setPace(time / distance);
-        }
-    };
+    const updateValues = (
+        field: "time" | "distance" | "pace",
+        value: string,
+    ) => {
+        if (isNaN(Number(value)) || Number(value) <= 0) return;
 
-    const calculateTime = () => {
-        if (pace > 0) {
-            setTime(distance * pace);
-        }
-    };
-
-    const calculateDistance = () => {
-        if (pace > 0) {
-            setDistance(time / pace);
+        if (field === "time") {
+            setTime(value);
+            if (distance)
+                setPace((parseFloat(value) / parseFloat(distance)).toFixed(2));
+            if (pace)
+                setDistance((parseFloat(value) / parseFloat(pace)).toFixed(2));
+        } else if (field === "distance") {
+            setDistance(value);
+            if (time)
+                setPace((parseFloat(time) / parseFloat(value)).toFixed(2));
+            if (pace)
+                setTime((parseFloat(value) * parseFloat(pace)).toFixed(2));
+        } else if (field === "pace") {
+            setPace(value);
+            if (time)
+                setDistance((parseFloat(time) / parseFloat(value)).toFixed(2));
+            if (distance)
+                setTime((parseFloat(value) * parseFloat(distance)).toFixed(2));
         }
     };
 
     return (
-        <div className="max-w-lg mx-auto mt-10 p-6 border rounded-lg shadow">
-            <h2 className="text-xl font-semibold text-center">
-                Running Calculator
-            </h2>
-            <p className="text-center">
-                Using {isMetric ? "Metric" : "Imperial"} system
-            </p>
+        <div className="max-w-md mx-auto mt-10 p-4 border rounded-lg shadow-md bg-white space-y-4 text-center">
+            <h2 className="text-xl font-semibold">Running Calculator</h2>
+            <p>Using {isMetric ? "Metric" : "Imperial"} system</p>
 
-            <div className="mt-4">
+            <div>
                 <label className="block font-medium">Time (minutes)</label>
                 <input
-                    type="number"
-                    className="w-full p-2 border rounded"
+                    type="text"
+                    className="w-full p-2 border rounded text-center"
                     value={time}
-                    onChange={(e) => setTime(Number(e.target.value))}
-                    onBlur={calculateDistance}
+                    onChange={(e) => updateValues("time", e.target.value)}
+                    placeholder="Enter time"
                 />
             </div>
 
-            <div className="mt-4">
+            <div>
                 <label className="block font-medium">
                     Distance ({isMetric ? "km" : "miles"})
                 </label>
                 <input
-                    type="number"
-                    className="w-full p-2 border rounded"
+                    type="text"
+                    className="w-full p-2 border rounded text-center"
                     value={distance}
-                    onChange={(e) => setDistance(Number(e.target.value))}
-                    onBlur={calculatePace}
+                    onChange={(e) => updateValues("distance", e.target.value)}
+                    placeholder="Enter distance"
                 />
             </div>
 
-            <div className="mt-4">
+            <div>
                 <label className="block font-medium">
                     Pace (min per {isMetric ? "km" : "mile"})
                 </label>
                 <input
-                    type="number"
-                    className="w-full p-2 border rounded"
+                    type="text"
+                    className="w-full p-2 border rounded text-center"
                     value={pace}
-                    onChange={(e) => setPace(Number(e.target.value))}
-                    onBlur={calculateTime}
+                    onChange={(e) => updateValues("pace", e.target.value)}
+                    placeholder="Enter pace"
                 />
             </div>
         </div>
