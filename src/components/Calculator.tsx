@@ -11,26 +11,36 @@ const RunningCalculator: React.FC = () => {
         field: "time" | "distance" | "pace",
         value: string,
     ) => {
-        if (isNaN(Number(value)) || Number(value) <= 0) return;
+        if (value === "") {
+            if (field === "time") setTime("");
+            if (field === "distance") setDistance("");
+            if (field === "pace") setPace("");
+            return;
+        }
+
+        if (isNaN(Number(value)) || Number(value) < 0) return;
 
         if (field === "time") {
             setTime(value);
-            if (distance)
+            if (distance && parseFloat(distance) > 0) {
                 setPace((parseFloat(value) / parseFloat(distance)).toFixed(2));
-            if (pace)
+            } else if (pace && parseFloat(pace) > 0) {
                 setDistance((parseFloat(value) / parseFloat(pace)).toFixed(2));
+            }
         } else if (field === "distance") {
             setDistance(value);
-            if (time)
+            if (time && parseFloat(time) > 0) {
                 setPace((parseFloat(time) / parseFloat(value)).toFixed(2));
-            if (pace)
+            } else if (pace && parseFloat(pace) > 0) {
                 setTime((parseFloat(value) * parseFloat(pace)).toFixed(2));
+            }
         } else if (field === "pace") {
             setPace(value);
-            if (time)
+            if (time && parseFloat(time) > 0) {
                 setDistance((parseFloat(time) / parseFloat(value)).toFixed(2));
-            if (distance)
+            } else if (distance && parseFloat(distance) > 0) {
                 setTime((parseFloat(value) * parseFloat(distance)).toFixed(2));
+            }
         }
     };
 
